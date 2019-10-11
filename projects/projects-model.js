@@ -2,13 +2,18 @@ const db = require('../data/db.config');
 
 module.exports = {
     find,
+    findResources
 }
 
 function find() {
-    return db('recipes');
+    return db('projects');
 }
 
-// function findShoppingList(id) {
+function findResources(id) {
+    return db('resources')
+}
+
+// function findResources(id) {
 //     return db('recipe_ingredients as ri')
 //     .join('ingredients as i', 'i.id', '=', 'ri.ingredient_id')
 //     .where({ recipe_id: id })

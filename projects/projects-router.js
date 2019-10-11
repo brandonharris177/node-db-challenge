@@ -14,21 +14,30 @@ router.get('/', (req, res) => {
   });
 });
 
-// router.get('/:id/shoppingList', (req, res) => {
-//   const { id } = req.params;
-//   console.log(id)
+router.get('/resources', (req, res) => {
+  Projects.findResources()
+  .then(projects => {
+    res.json(projects);
+  })
+  .catch(err => {
+    res.status(500).json({ message: 'Failed to get resources' });
+  });
+});
 
-//   Projects.findShoppingList(id)
-//   .then(shoppingList => {
-//     console.log(shoppingList)
-//     if (shoppingList.length) {
-//       res.json(shoppingList);
+// router.get('/:id/resources', (req, res) => {
+//   const { id } = req.params;
+
+//   Projects.findResources(id)
+//   .then(resources => {
+//     console.log(resources)
+//     if (resources.length) {
+//       res.json(resources);
 //     } else {
-//       res.status(404).json({ message: 'Could not find shoppingList for given recipe' })
+//       res.status(404).json({ message: 'Could not find resources for given recipe' })
 //     }
 //   })
 //   .catch(err => {
-//     res.status(500).json({ message: 'Failed to get shoppingList' });
+//     res.status(500).json({ message: 'Failed to get resources' });
 //   });
 // });
 
