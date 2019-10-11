@@ -36,39 +36,38 @@ router.post('/', (req, res) => {
   });
 });
 
-// router.get('/:id/resources', (req, res) => {
-//   const { id } = req.params;
+router.post('/resources', (req, res) => {
+  const resourceData = req.body;
 
-//   Projects.findResources(id)
-//   .then(resources => {
-//     console.log(resources)
-//     if (resources.length) {
-//       res.json(resources);
-//     } else {
-//       res.status(404).json({ message: 'Could not find resources for given recipe' })
-//     }
-//   })
-//   .catch(err => {
-//     res.status(500).json({ message: 'Failed to get resources' });
-//   });
-// });
+  Projects.addResources(resourceData)
+  .then(newResource => {
+    res.status(201).json(newResource);
+  })
+  .catch (err => {
+    res.status(500).json({ message: 'Failed to create new resource' });
+  });
+});
 
-// router.get('/:id/instructions', (req, res) => {
-//   const { id } = req.params;
+router.post('/tasks', (req, res) => {
+  const taskData = req.body;
 
-//   Projects.findInstructions(id)
-//   .then(instructions => {
-//     console.log(instructions)
-//     if (instructions.length) {
-//       res.json(instructions);
-//     } else {
-//       res.status(404).json({ message: 'Could not find instructions for given recipe' })
-//     }
-//   })
-//   .catch(err => {
-//     res.status(500).json({ message: 'Failed to get instructions' });
-//   });
-// });
+  Projects.addTask(taskData)
+  .then(newTask => {
+    res.status(201).json(newTask);
+  })
+  .catch (err => {
+    res.status(500).json({ message: 'Failed to create new task' });
+  });
+});
 
+router.get('/tasks', (req, res) => {
+  Projects.findTasks()
+  .then(tasks => {
+    res.json(tasks);
+  })
+  .catch(err => {
+    res.status(500).json({ message: 'Failed to get tasks' });
+  });
+});
 
 module.exports = router;

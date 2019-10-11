@@ -3,7 +3,10 @@ const db = require('../data/db.config');
 module.exports = {
     find,
     findResources,
-    addProject
+    addProject,
+    addResources,
+    addTask,
+    findTasks
 }
 
 function find() {
@@ -20,6 +23,24 @@ function findProjectById(id) {
     .first();
 }
 
+function findResourceById(id) {
+    return db('resources')
+    .where({id})
+    .first();
+}
+
+function findTaskById(id) {
+    return db('tasks')
+    .where({id})
+    .first();
+}
+
+function findTasks() {
+    return db('tasks as t')
+    .join('projects as p', 'p.id', '=', 't.project_id')
+    .select('p.name', 'p.description', 't.id', 't.description', 't.completed')
+}
+
 function addProject(newProject) {
     return db('projects')
       .insert(newProject, 'id')
@@ -28,16 +49,18 @@ function addProject(newProject) {
       });
 }
 
-// function findResources(id) {
-//     return db('recipe_ingredients as ri')
-//     .join('ingredients as i', 'i.id', '=', 'ri.ingredient_id')
-//     .where({ recipe_id: id })
-//     .select('i.name', 'ri.measurement_type', 'ri.ammount')
-// }
+function addResources(newResource) {
+    return db('resources')
+      .insert(newResource, 'id')
+      .then(([id]) => {
+        return findResourceById(id);
+      });
+}
 
-// function findInstructions(id) {
-//     return db('instructions as i')
-//     .join('recipes as r', 'r.id', '=', 'i.recipe_id')
-//     .where({ recipe_id: id })
-//     .select('i.step_number', 'i.description')
-// }
+function addTask(newTask) {
+    return db('tasks')
+      .insert(newTask, 'id')
+      .then(([id]) => {
+        return findTaskById(id);
+      });
+}
