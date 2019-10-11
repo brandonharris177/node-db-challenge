@@ -6,15 +6,23 @@ module.exports = {
     addProject,
     addResources,
     addTask,
-    findTasks
+    findTasks,
+    remove,
+    removeResource,
+    removeTask,
+    findProjectById,
+    update,
+    updateResource,
+    updateTask,
+    findTaskById
 }
 
 function find() {
-    return db('projects');
+    return db('projects')
 }
 
-function findResources(id) {
-    return db('resources')
+function findResources() {
+    return db('resources');
 }
 
 function findProjectById(id) {
@@ -62,5 +70,62 @@ function addTask(newTask) {
       .insert(newTask, 'id')
       .then(([id]) => {
         return findTaskById(id);
+      });
+}
+
+function remove(id) {
+    return db('projects')
+    .where({id})
+    .del()
+}
+
+function removeResource(id) {
+    return db('resources')
+    .where({id})
+    .del()
+}
+
+function removeTask(id) {
+    return db('tasks')
+    .where({id})
+    .del()
+}
+
+function update(changes, id) {
+    return db('projects')
+    .where('id', `=`, id)
+    .update(changes, 'id')
+    .then(res => {
+        if (res === 1) {
+            return findProjectById(id)
+        } else {
+            res.status(500).json('server error')
+        }
+      });
+}
+
+function updateResource(changes, id) {
+    return db('resources')
+    .where('id', `=`, id)
+    .update(changes, 'id')
+    .then(res => {
+        if (res === 1) {
+            return findResourceById(id)
+        } else {
+            res.status(500).json('server error')
+        }
+      });
+}
+
+function updateTask(changes, id) {
+    return db('tasks')
+    .where('id', `=`, id)
+    .update(changes, 'id')
+    .then(res => {
+        if (res === 1) {
+            return findTaskById(id)
+        } else {
+            res.status(500).json('server error')
+        }
       });
 }
