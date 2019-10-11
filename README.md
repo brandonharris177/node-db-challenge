@@ -40,11 +40,19 @@ Demonstrate your understanding of this week's concepts by answering the followin
 
 - [ ] Explain the difference between `Relational Databases` and `SQL`.
 
+In a relational database data is stored in tables with rows and columns matmatially relational to eachther while SQL is a language used to access data in a relational database.
+
 - [ ] Why do tables need a `primary key`?
+
+A primary key makes sure that all the values in a row have a unique identifier and can be isolated and accessed. 
 
 - [ ] What is the name given to a table column that references the primary key on another table.
 
+A forign key is a value in a table that references a primary key in another table.
+
 - [ ] What do we need in order to have a _many to many_ relationship between two tables.
+
+In order to have many to many relationships a bridge table or Associative entity that connects both tables with forign keys is needed.
 
 ## Minimum Viable Product
 
